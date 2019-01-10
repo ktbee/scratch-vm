@@ -1051,7 +1051,7 @@ class Blocks {
             xmlString += `>${value}</field>`;
         }
         // Add blocks connected to the next connection.
-        if (block.next) {
+        if (block.next && this._blocks[block.next]) {
             xmlString += `<next>${this.blockToXML(block.next, comments)}</next>`;
         }
         xmlString += `</${tagName}>`;
