@@ -990,6 +990,10 @@ class Blocks {
      */
     blockToXML (blockId, comments) {
         const block = this._blocks[blockId];
+        if (!block) {
+            log.warn('missing for blockId', blockId);
+            return;
+        }
         // Encode properties of this block.
         const tagName = (block.shadow) ? 'shadow' : 'block';
         let xmlString =

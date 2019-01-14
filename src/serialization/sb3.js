@@ -255,7 +255,7 @@ const compressInputTree = function (block, blocks) {
         // traverse currInput skipping the first element, which describes whether the block
         // and shadow are the same
         for (let i = 1; i < currInput.length; i++) {
-            if (!currInput[i]) continue; // need this check b/c block/shadow can be null
+            if (currInput[i] === null) continue; // need this check b/c block/shadow can be null
             const blockOrShadowID = currInput[i];
             // replace element of currInput directly
             // (modifying input block directly)
