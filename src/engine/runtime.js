@@ -316,7 +316,7 @@ class Runtime extends EventEmitter {
         // I/O related data.
         /** @type {Object.<string, Object>} */
         this.ioDevices = {
-            clock: new Clock(),
+            clock: new Clock(this),
             cloud: new Cloud(this),
             keyboard: new Keyboard(this),
             mouse: new Mouse(this),
@@ -649,6 +649,15 @@ class Runtime extends EventEmitter {
      */
     static get BLOCKS_NEED_UPDATE () {
         return 'BLOCKS_NEED_UPDATE';
+    }
+
+    /**
+     * Event name for reporting that the thread has finished executing and
+     * compat timers should update their millisecond clock.
+     * @const {string}
+     */
+    static get UPDATE_COMPAT_MSECS () {
+        return 'UPDATE_COMPAT_MSECS';
     }
 
     /**

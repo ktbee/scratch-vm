@@ -138,7 +138,6 @@ class Sequencer {
                     activeThread.status === Thread.STATUS_DONE) {
                     // Finished with this thread.
                     stoppedThread = true;
-                    this.runtime.updateCurrentMSecs();
                 }
             }
             // We successfully ticked once. Prevents running STATUS_YIELD_TICK
@@ -205,6 +204,7 @@ class Sequencer {
                 this.retireThread(thread);
             } else {
                 execute(this, thread);
+                this.runtime.emit(this.runtime.UPDATE_COMPAT_MSECS, this.runtime.currentMSecs);
             }
             if (this.runtime.profiler !== null) {
                 // this.runtime.profiler.stop();

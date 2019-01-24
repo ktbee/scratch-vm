@@ -2,7 +2,8 @@ const Timer = require('../util/timer');
 
 class Clock {
     constructor (runtime) {
-        this._projectTimer = new Timer();
+        this._compatMSecs = runtime.currentMSecs;
+        this._projectTimer = new Timer({now: () => this._compatMSecs});
         this._projectTimer.start();
         this._pausedTime = null;
         this._paused = false;
@@ -11,6 +12,11 @@ class Clock {
          * @type{!Runtime}
          */
         this.runtime = runtime;
+        this.runtime.on(this.runtime.UPDATE_COMPAT_MSECS, this.updateCompatMSecs.bind(this));
+    }
+
+    updateCompatMSecs (timestamp) {
+        this._compatMSecs = timestamp;
     }
 
     projectTimer () {
