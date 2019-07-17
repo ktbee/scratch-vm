@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="52px" height="52px" viewBox="0 0 52 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>Down</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M26.0118378,39 C25.446216,39 24.9183023,38.7842324 24.5261379,38.3953488 L16.6325713,30.5173212 C16.0116442,29.8976165 15.8331591,29.0169835 16.1624767,28.221654 C16.4917943,27.4313423 17.2685816,26.9195214 18.1408961,26.9195214 L21.0041994,26.9195214 L22.5703434,15.9680594 C22.758884,14.4802663 23.9580022,13.270964 25.5115768,13.0275982 C25.6598954,13.0100357 25.8107279,13 25.9590465,13 C27.6810507,13 29.1441258,14.2770433 29.3628329,15.9555148 L30.8887548,26.9195214 L33.8827796,26.9195214 C34.7450386,26.9195214 35.4891455,27.4012352 35.8260048,28.1815111 C36.1653778,28.9617871 36.001976,29.8700183 35.3911044,30.5173212 L27.4975378,38.3953488 C27.1053734,38.7842324 26.5774597,39 26.0118378,39 Z" id="path-1"></path>
+    </defs>
+    <g id="Sketches" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-718.000000, -688.000000)" id="Portrait---Project-page---Touch-Keys-on">
+            <g transform="translate(575.000000, 130.000000)">
+                <g id="Scratch" transform="translate(10.000000, 51.000000)">
+                    <g id="Stage" transform="translate(0.000000, 128.000000)">
+                        <g id="Controls" transform="translate(0.000000, 277.000000)">
+                            <g id="Directional-Pad" transform="translate(89.000000, 14.000000)">
+                                <g id="Down" transform="translate(44.000000, 88.000000)">
+                                    <circle id="Oval" fill="#4D97FF" cx="26" cy="26" r="26"></circle>
+                                    <mask id="mask-2" fill="white">
+                                        <use xlink:href="#path-1"></use>
+                                    </mask>
+                                    <use id="Fill-1" fill="#FFFFFF" xlink:href="#path-1"></use>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
