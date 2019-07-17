@@ -17,7 +17,7 @@
       overscroll-behavior-y: none;
     }
 
-    .sw-body {
+    .body {
       height: 100%;
       overflow: auto;
       position: fixed;
@@ -53,12 +53,6 @@
       color: red;
     }
 
-    /*
-    * This button styling is for virtual keys,
-    * which map to keyboard keys in Scratch games.
-    * This UI only appears on touch-capable devices
-    * allows for desktop games to be play on mobile.
-    */
     .buttons-container {
       display: flex;
       justify-content: space-evenly;
@@ -123,7 +117,7 @@
     }
 
     .up-arrow {
-      background-image: url('<%= htmlWebpackPlugin.options.base %>/assets/up.svg');
+      background-image: url('assets/up.svg');
       margin: auto;
       top: 2%;
       left: 50%;
@@ -131,7 +125,7 @@
     }
 
     .down-arrow {
-      background-image: url('<%= htmlWebpackPlugin.options.base %>/assets/down.svg');
+      background-image: url('assets/down.svg');
       margin: auto;
       bottom: 2%;
       right: 50%;
@@ -139,7 +133,7 @@
     }
 
     .right-arrow {
-      background-image: url('<%= htmlWebpackPlugin.options.base %>/assets/right.svg');
+      background-image: url('assets/right.svg');
       margin: auto;
       top: 50%;
       right: 2%;
@@ -147,7 +141,7 @@
     }
 
     .left-arrow {
-      background-image: url('<%= htmlWebpackPlugin.options.base %>/assets/left.svg');
+      background-image: url('assets/left.svg');
       margin: auto;
       top: 50%;
       left: 2%;
@@ -166,7 +160,10 @@
       font-size: 1.25rem;
     }
 
-    /* Preserve the original Scratch project ratio */
+    .hidden {
+      display: none;
+    }
+
     @media ( max-aspect-ratio: 4/3 ) {
       .stage-container {
         width: 100vw;
@@ -176,7 +173,7 @@
     }
 
     @media (orientation: landscape) {
-      .sw-body {
+      .body {
         position: fixed;
         left: 0;
         top: 0;
@@ -354,12 +351,11 @@
     }
     </style>
   </head>
-  <body class="sw-body">
+  <body class="body">
   <div class="stage-container">
-    <!-- This canvas element loads the Scratch project -->
     <canvas class="stage" id="scratch-stage" width="480" height="360"></canvas>
-    <!-- Element for showing the hearts captured score -->
     <div id="hearts"></div>
   </div>
+  <script src="./sw-player.js" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>

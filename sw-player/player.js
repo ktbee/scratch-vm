@@ -2,11 +2,9 @@ const AudioEngine = require('scratch-audio');
 const ScratchStorage = require('scratch-storage');
 const ScratchRender = require('scratch-render');
 const ScratchSVGRenderer = require('scratch-svg-renderer');
-const VirtualMachine = require('../../..');
+const VirtualMachine = require('../..');
 const IOEvents = require('./io');
 const {ProjectKeys, VirtualKeys} = require('./keys');
-const defaultProjectPath = process.env.NODE_ENV === 'production' ? // eslint-disable-line no-undef
-    './sw-player/assets/playground.sb3' : './assets/playground.sb3';
 
 class HeartsMonitor {
     constructor (vm, heartsDiv) {
@@ -166,7 +164,7 @@ class Player {
             this.vm.downloadProjectId(projectId);
         } else {
             // If no project ID is supplied, load a local project
-            fetch(defaultProjectPath).then(response => response.arrayBuffer())
+            fetch('./playground.sb3').then(response => response.arrayBuffer())
                 .then(arrayBuffer => {
                     this.vm.loadProject(arrayBuffer);
                 });
