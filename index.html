@@ -1,111 +1,365 @@
 <!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width">
+    <style>
 
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Scratch VM Benchmark</title>
-    <link rel="stylesheet" href="./benchmark.css" type="text/css" media="screen">
-    <script>
-        // Track loading time with timestamps and if possible the performance
-        // api.
+    html {
+      height: 100%;
+      overflow: auto;
+      user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      overscroll-behavior-y: none;
+    }
 
-        // Start tracking loading of Scratch before the body dom is evaluated.
-        window.ScratchVMLoadStart = Date.now();
-        if (window.performance) {
-            // Mark for browser performance inspectors and if we want to use
-            // other performance apis.
-            performance.mark('Scratch.LoadStart');
+    .sw-body {
+      height: 100%;
+      overflow: auto;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      margin: 0;
+      overflow: hidden;
+      text-align: center;
+      background-color: #e9effe;
+      color: #cccccc;
+      touch-action: none;
+    }
+
+    .stage-container {
+      background-color: white;
+      padding: 0px 0px 10px 0px;
+      display: inline-block;
+      width: 133.33333vh;
+      height: 100vh;
+      max-height: 100%;
+      margin: 0 auto;
+    }
+
+    .stage {
+      width: inherit;
+      max-height: 100%;
+    }
+
+    #hearts {
+      position: absolute;
+      top: 5%;
+      right: 8%;
+      color: red;
+    }
+
+    /*
+    * This button styling is for virtual keys,
+    * which map to keyboard keys in Scratch games.
+    * This UI only appears on touch-capable devices
+    * allows for desktop games to be play on mobile.
+    */
+    .buttons-container {
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .arrow-buttons {
+      width: 50%;
+      margin: 0 auto;
+      position: relative;
+      height: 0; 
+      padding-bottom: 50%;
+    }
+
+    .arrow {
+      position: absolute;
+      display: inline-block;
+      margin: 20px;
+    }
+
+    .text-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-flow: row wrap;
+    }
+
+    .text-buttons .text {
+      height: 5rem;
+      width: 5rem;
+      background-color: #4d97ff;
+      color: white;
+      border-radius: 50%;
+      font-size: 2.5rem;
+    }
+
+    .text-buttons .any-button,
+    .text-buttons .space-button {
+      font-size: 1.5rem;
+    }
+
+    .arrow-many-buttons .text-buttons .any-button,
+    .arrow-many-buttons .text-buttons .space-button {
+      font-size: 1rem;
+    }
+
+    .touch-control {
+      height: 3.375rem;
+      width: 3.375rem;
+      margin: 20px;
+      touch-action: none;
+      background-repeat: space no-repeat;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .arrow {
+      background-position: center center;
+      background-size: 70%;
+      height: 5rem;
+      width: 5rem;
+    }
+
+    .up-arrow {
+      background-image: url('/sw-player/assets/up.svg');
+      margin: auto;
+      top: 2%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .down-arrow {
+      background-image: url('/sw-player/assets/down.svg');
+      margin: auto;
+      bottom: 2%;
+      right: 50%;
+      transform: translateX(50%);
+    }
+
+    .right-arrow {
+      background-image: url('/sw-player/assets/right.svg');
+      margin: auto;
+      top: 50%;
+      right: 2%;
+      transform: translateY(-50%);
+    }
+
+    .left-arrow {
+      background-image: url('/sw-player/assets/left.svg');
+      margin: auto;
+      top: 50%;
+      left: 2%;
+      transform: translateY(-50%);
+    }
+
+    .arrow-one-buttons .arrow-buttons,
+    .arrow-many-buttons .text-buttons {
+      width: 50%;
+      padding: 0 3%;
+    }
+
+    .arrow-many-buttons .text {
+      height: 3rem;
+      width: 3rem;
+      font-size: 1.25rem;
+    }
+
+    /* Preserve the original Scratch project ratio */
+    @media ( max-aspect-ratio: 4/3 ) {
+      .stage-container {
+        width: 100vw;
+        height: 75vw;
+        margin-top: calc(50vh - 37.5vw)
+      }
+    }
+
+    @media (orientation: landscape) {
+      .sw-body {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .buttons-container {
+        position: absolute;
+        width: 100%;
+        bottom: 2%;
+        left: 2%;
+        opacity: 0.9;
+      }
+
+      .arrow-buttons {
+        width: 30%;
+        margin: 0;
+        position: relative;
+        height: 0; 
+        padding-bottom: 30%;
+      }
+
+      .text-buttons {
+        justify-content: flex-start;
+      }
+
+      .arrow-only {
+        justify-content: flex-start;
+      }
+
+      .arrow-one-button,
+      .arrow-many-buttons {
+        justify-content: space-between;
+      }
+
+      .arrow-one-button .text-buttons {
+        width: 20%;
+        padding: 0;
+      }
+
+      .arrow-many-buttons .text-buttons {
+        width: 25%;
+        padding: 2%;
+      }
+
+      .arrow-many-buttons .text-buttons {
+        width: 30%;
+        justify-content: space-evenly;
+      }
+
+      .arrow-many-buttons .text {
+        margin: 0 2%;
+      }
+
+      .text-button-div {
+        margin: 2%;
+      }
+    }
+
+    @media (orientation: portrait) {
+      .stage-container {
+        margin: 0;
+        box-shadow: 0px 0px 7px 0px grey;
+      }
+
+      #hearts {
+        position: absolute;
+        top: 2%;
+      }
+
+      .buttons-container {
+        margin-top: 8%;
+      }
+
+      .text-buttons,
+      .arrow-buttons {
+        width: 50%;
+      }
+
+      .arrow {
+        background-size: 80%;
+        height: 4rem;
+        width: 4rem;
+      }
+    }
+
+    /* Tablets */
+    @media only screen
+      and (orientation: landscape)
+      and (min-device-width: 768px)
+      and (max-device-width: 1024px) {
+        .stage-container {
+          height: 100vh;
         }
-    </script>
-</head>
-<body>
-  <h2>Scratch VM Benchmark</h2>
-  <p class="description">
-    Welcome to the scratch-vm benchmark. This tool helps you profile a scratch
-    project. When you load the page, it:
-    <ol class="description">
-      <li>loads the default project and enables turbo mode
-      <li>runs the project for 4 seconds to warm up
-      <li>profiles for 6 seconds
-      <li>stops and reports
-    </ol>
-  </p>
-  <div class="run-form">
-      <input type="text" value="119615668">
-      <button class="run">run</button>
+
+        .touch-control,
+        .text-buttons .text {
+          height: 8rem;
+          width: 8rem;
+          font-size: 2.5rem;
+        }
+
+        .arrow-buttons {
+          width: 25%;
+          padding-bottom: 25%;
+        }
+
+        .arrow {
+          height: 5.5rem;
+          width: 5.5rem;
+          background-size: 80%;
+        }
+
+        .arrow-many-buttons .text-buttons .space-button,
+        .arrow-many-buttons .text-buttons .any-button {
+          font-size: 1.6rem;
+        }
+    }
+
+    @media only screen
+      and (orientation: portrait)
+      and (min-device-width: 768px)
+      and (max-device-width: 1024px) {
+        .stage-container {
+          height: 75vw;
+        } 
+
+        .buttons-container {
+          margin: 0;
+        }
+
+        .arrow-buttons {
+          width: 40%;
+          padding-bottom: 40%;
+        }
+
+        .touch-control,
+        .text-buttons .text {
+          height: 5rem;
+          width: 5rem;
+          font-size: 2.5rem;
+        }
+
+        .arrow-one-button .text-buttons {
+          justify-content: space-evenly;
+        }
+
+        .arrow-many-buttons .text-buttons .space-button,
+        .arrow-many-buttons .text-buttons .any-button {
+          font-size: 1.6rem;
+        }
+
+        .arrow-one-button .text,
+        .arrow {
+          height: 7rem;
+          width: 7rem;
+        }
+
+        .up-arrow {
+          top: 5%;
+        }
+
+        .down-arrow {
+          bottom: 5%;
+        }
+
+        .right-arrow {
+          right: 5%;
+        }
+
+        .left-arrow {
+          left: 5%;
+        }
+    }
+    </style>
+  </head>
+  <body class="sw-body">
+  <div class="stage-container">
+    <!-- This canvas element loads the Scratch project -->
+    <canvas class="stage" id="scratch-stage" width="480" height="360"></canvas>
+    <!-- Element for showing the hearts captured score -->
+    <div id="hearts"></div>
   </div>
-  <p class="run-push">
-    <i>Try a different project, like `130041250`</i>
-  </p>
-
-  <canvas id="scratch-stage"></canvas><br />
-
-  <div class="layer">
-    <div class="loading">
-      <label>Loading Data:</label>
-      <span class="loading-complete">0</span> / <span class="loading-total">0</span> <span class="loading-time">(--ms)</span>
-    </div>
-    <div class="loading">
-      <label>Loading Content:</label>
-      <span class="loading-content-complete">0</span> / <span class="loading-content-total">0</span> <span class="loading-content-time">(--ms)</span>
-    </div>
-    <div class="loading">
-      <label>Hydrating:</label>
-      <span class="loading-hydrate-complete">0</span> / <span class="loading-hydrate-total">0</span> <span class="loading-hydrate-time">(--ms)</span>
-     </div>
-    <div class="loading">
-      <label>Memory:</label>
-      <span class="loading-memory-current">--</span> / <span class="loading-memory-peak">--</span>
-     </div>
-    <div class="profile-count-group">
-      <div class="profile-count">
-        <label>Percent of time worked:</label>
-        <span class="profile-count-value profile-count-amount-recorded">...</span>
-      </div>
-      <div class="profile-count">
-        <label>Steps looped:</label>
-        <span class="profile-count-value profile-count-steps-looped">...</span>
-      </div>
-      <div class="profile-count">
-        <label>Blocks executed:</label>
-        <span class="profile-count-value profile-count-blocks-executed">...</span>
-      </div>
-      <a class="share"><div class="profile-count">
-        <label>Share this report</label>
-      </div></a>
-      <a class="share" target="_parent">
-          <div class="profile-count">
-              <label>Run the full suite</label>
-          </div>
-      </a>
-    </div>
-  </div>
-
-  <div class="profile-tables">
-  <table class="profile-count-frame-table" cellspacing="0">
-    <thead>
-    <tr class="profile-count-frame-head"><th>Frame</th><th>Self Time</th><th>Total Time</th><th>Executions</th></tr>
-    </thead>
-    <tbody>
-    <tr class="profiler-count-running"><td colspan="4"></td></tr>
-    </tbody>
-  </table>
-
-  <table class="profile-count-opcode-table" cellspacing="0">
-    <thead>
-    <tr class="profile-count-opcode-head">
-      <th>opcode</th><th>Self Time</th><th>Total Time</th><th>Executions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="profiler-count-running"><td colspan="4"></td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <div id="blocks"></div>
-
-  <!-- Playground -->
-  <script src="./benchmark.js"></script>
-</body>
+  <script type="text/javascript" src="/sw-player/main.min.js"></script></body>
 </html>
