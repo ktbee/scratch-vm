@@ -1,0 +1,81 @@
+html {
+  height: 100%;
+  overflow: auto;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  overscroll-behavior-y: none;
+}
+
+.sw-body {
+  height: 100%;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  overflow: hidden;
+  text-align: center;
+  background-color: #e9effe;
+  color: #cccccc;
+  touch-action: none;
+}
+
+#hearts {
+  position: absolute;
+  top: 5%;
+  right: 8%;
+  color: red;
+}
+
+/* Preserve the original Scratch project ratio */
+@media ( max-aspect-ratio: 4/3 ) {
+  .stage-container {
+    width: 100vw;
+    height: 75vw;
+    margin-top: calc(50vh - 37.5vw)
+  }
+}
+
+@media (orientation: landscape) {
+  .sw-body {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@media (orientation: portrait) {
+  .stage-container {
+    margin: 0;
+    box-shadow: 0px 0px 7px 0px grey;
+  }
+
+  #hearts {
+    position: absolute;
+    top: 2%;
+  }
+}
+
+/* Tablets */
+@media only screen
+  and (orientation: landscape)
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px) {
+    .stage-container {
+      height: 100vh;
+    }
+}
+
+@media only screen
+  and (orientation: portrait)
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px) {
+    .stage-container {
+      height: 75vw;
+    }
+}
